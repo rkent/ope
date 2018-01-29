@@ -98,6 +98,11 @@ GIT_REPOS = {"sysprep_scripts": "https://github.com/operepo/sysprep_scripts.git"
              "ope_server_sync_binaries": "https://github.com/operepo/ope_server_sync_binaries.git",
              }
 
+OPE_DEVMODE = "OPE_DEVMODE" in os.environ
+if OPE_DEVMODE:
+  Logger.info("OPE_DEVMODE set, making development assumptions")
+else:
+  Logger.info("OPE_DEVMODE not set") 
 
 def get_app_folder():
     global Logger, APP_FOLDER
@@ -1325,14 +1330,18 @@ class SyncOPEApp(App):
 
     def update_online_server_worker(self, status_label, run_button=None, progress_bar=None):
         global progress_widget
+        global OPE_DEVMODE
         progress_widget = progress_bar
 
         # Get project folder (parent folder)
         root_path = os.path.dirname(get_app_folder())
 
         # Pull current stuff from GIT repo so we have the latest code
-        status_label.text += "\n\n[b]Git Pull[/b]\nPulling latest updates from github...\n"
-        status_label.text += self.git_pull_local(status_label)
+        if OPE_DEVMODE:
+          status_label.text += "\n\n[b]Git pull skipped because OPE_DEVMODE[/b]"
+        else:
+          status_label.text += "\n\n[b]Git Pull[/b]\nPulling latest updates from github...\n"
+          status_label.text += self.git_pull_local(status_label)
 
         # Login to the OPE server
         ssh = paramiko.SSHClient()
