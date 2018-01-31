@@ -1,0 +1,11 @@
+    ope-seekoffdb:
+        build: ./ope-elasticsearch
+        image: operepo/ope-elasticsearch:release
+        container_name: ope-elasticsearch
+        restart: always
+        ports:
+            - "9200"
+            - "9300"
+        env_file: .env
+        volumes:
+          - ../volumes/elasticsearch/data:/usr/share/elasticsearch/data:rw

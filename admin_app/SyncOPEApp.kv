@@ -603,11 +603,18 @@
                     on_active: app.set_app_active('ope-rachel', self.active)
 
                 GridLabel:
-                    text: "[color=ffff00]**[/color] Stack Dump (ope-stackdump) - StackDump is a copy of Stack Overflow filtered for inmate use"
+                    text: "[color=ffff00]**[/color] Seekoff (ope-seekoff) - Seekoff is a copy of Stack Overflow filtered for inmate use"
                 GridSwitch:
-                    id: stackdump_on
-                    active: app.is_app_active('ope-stackdump')
-                    on_active: app.set_app_active('ope-stackdump', self.active)
+                    id: seekoff_on
+                    active: app.is_app_active('ope-seekoff')
+                    on_active: app.set_app_active('ope-seekoff', self.active)
+
+                GridLabel:
+                    text: "[color=ffff00]**[/color] Elasticsearch (ope-elasticsearch) - ELasticsearch is a database used by Seekoff"
+                GridSwitch:
+                    id: elasticsearch_on
+                    active: app.is_app_active('ope-elasticsearch')
+                    on_active: app.set_app_active('ope-elasticsearch', self.active)
 
                 GridLabel:
                     text: "[color=ffff00]**[/color] WAMAP (ope-wamap) - Open source math learning system with lesson materials"

@@ -1,0 +1,14 @@
+    ope-seekoff:
+        build: ./ope-seekoff
+        image: operepo/ope-seekoff:release
+        container_name: ope-seekoff
+        restart: always
+        ports:
+            - "80"
+        depends_on:
+            - ope-gateway
+            - ope-dns
+            - ope-elasticsearch
+        env_file: .env
+        environment:
+            - VIRTUAL_HOST=seekoff.<DOMAIN>

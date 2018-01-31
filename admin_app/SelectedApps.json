@@ -113,10 +113,10 @@
   },
   {
     "type": "bool",
-    "title": "ope-stackdump",
+    "title": "ope-seekoff",
     "desc": "Offline version of StackOverflow filtered for inmate use",
     "section": "Selected Apps",
-    "key": "ope-stackdump",
+    "key": "ope-seekoff",
     "true": "auto"
   },
   {
@@ -126,5 +126,14 @@
     "section": "Selected Apps",
     "key": "ope-wamap",
     "true": "auto"
-  }
+  },
+  {
+    "type": "bool",
+    "title": "ope-elasticsearch",
+    "desc": "Elastic search database (used by seekoff)",
+    "section": "Selected Apps",
+    "key": "ope-elasticsearch",
+    "true": "auto"
+  },
+
 ]
