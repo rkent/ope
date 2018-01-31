@@ -4,7 +4,7 @@
         container_name: ope-seekoff
         restart: always
         ports:
-            - "80"
+            - "8080"
         depends_on:
             - ope-gateway
             - ope-dns
@@ -12,3 +12,4 @@
         env_file: .env
         environment:
             - VIRTUAL_HOST=seekoff.<DOMAIN>
+            - SEEKOFF_ELASTIC_HOST=ope-elasticsearch:9200
