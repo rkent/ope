@@ -1,4 +1,4 @@
-    ope-seekoffdb:
+    ope-elasticsearch:
         build: ./ope-elasticsearch
         image: operepo/ope-elasticsearch:release
         container_name: ope-elasticsearch
