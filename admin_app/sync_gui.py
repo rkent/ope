@@ -326,7 +326,7 @@ class SyncOPEApp(App):
     required_apps = ["ope-gateway", "ope-router", "ope-dns", "ope-clamav", "ope-redis", "ope-postgresql" ]
     recommended_apps = ["ope-fog", "ope-canvas", "ope-smc"]
     stable_apps = [ "ope-kalite" ]
-    beta_apps = ["ope-coco", "ope-freecodecamp", "ope-gcf", "ope-jsbin", "ope-rachel", "ope-stackdump", "ope-wamap"]
+    beta_apps = ["ope-coco", "ope-freecodecamp", "ope-gcf", "ope-jsbin", "ope-rachel", "ope-seekoff", "ope-elasticsearch", "ope-wamap"]
 
     def load_current_settings(self):
         global MAIN_WINDOW
