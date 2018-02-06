@@ -2,12 +2,15 @@
         build: ./ope-seekoff
         image: operepo/ope-seekoff:release
         container_name: ope-seekoff
+        network_mode: <NETWORK_MODE>
         restart: always
         ports:
             - "8080"
         depends_on:
             - ope-gateway
             - ope-dns
+            - ope-elasticsearch
+        links:
             - ope-elasticsearch
         env_file: .env
         environment:
