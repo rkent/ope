@@ -8,5 +8,14 @@ FROM verdaccio/verdaccio:2.7.4
 MAINTAINER R Kent James <rkent@caspia.org>
 LABEL Description="NPM offline repository used by Open Prison Education" Vendor="openprisoneducation.com" Version="0.1"
 COPY ./config.yaml /verdaccio/conf/config.yaml
+COPY ./configOnline.yaml /verdaccio/conf/configOffline.yaml
+
+ENV CONFIGFILE config.yaml
+ENV PORT 4873
+ENV PROTOCOL http
+ENV APPDIR /usr/local/app
+ENV VIRTUAL_HOST=verdaccio.ed
 
 VOLUME ["/verdaccio/storage"]
+
+CMD $APPDIR/bin/verdaccio --config /verdaccio/conf/$CONFIGFILE --listen $PROTOCOL://0.0.0.0:${PORT}
