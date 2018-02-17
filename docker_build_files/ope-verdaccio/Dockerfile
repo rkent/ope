@@ -14,7 +14,6 @@ ENV CONFIGFILE config.yaml
 ENV PORT 4873
 ENV PROTOCOL http
 ENV APPDIR /usr/local/app
-ENV VIRTUAL_HOST=verdaccio.ed
 
 VOLUME ["/verdaccio/storage"]
 

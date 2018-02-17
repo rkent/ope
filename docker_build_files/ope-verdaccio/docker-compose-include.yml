@@ -5,7 +5,7 @@
         network_mode: <NETWORK_MODE>
         restart: always
         ports:
-            - "4379:4379"
+            - "4873"
         volumes:
             - ../volumes/verdaccio:/verdaccio/storage:rw
         depends_on:
