@@ -1,5 +1,8 @@
     ope-verdaccio:
-        build: ./ope-verdaccio
+        build: 
+          context: ./ope-verdaccio
+          args:
+            CONFIGFILE: $VERDACCIO_CONFIGFILE
         image: operepo/ope-verdaccio:release
         container_name: ope-verdaccio
         network_mode: <NETWORK_MODE>

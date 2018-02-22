@@ -5,15 +5,16 @@ FROM verdaccio/verdaccio:2.7.4
 
 # To copy to offline server use the setup tool
 
+ARG CONFIGFILE
+ENV CONFIGFILE ${CONFIGFILE:-config.yaml}
+ENV PORT 4873
+ENV PROTOCOL http
+ENV APPDIR /usr/local/app
+
 MAINTAINER R Kent James <rkent@caspia.org>
 LABEL Description="NPM offline repository used by Open Prison Education" Vendor="openprisoneducation.com" Version="0.1"
 COPY ./config.yaml /verdaccio/conf/config.yaml
 COPY ./configOnline.yaml /verdaccio/conf/configOnline.yaml
-
-ENV CONFIGFILE config.yaml
-ENV PORT 4873
-ENV PROTOCOL http
-ENV APPDIR /usr/local/app
 
 VOLUME ["/verdaccio/storage"]
 
