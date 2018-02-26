@@ -501,42 +501,42 @@
                     text: "[b][color=ff0000]**[/color][/b] Gateway (ope-gateway) - Routes traffic to various apps"
                 GridSwitch:
                     id: gateway_on
-                    disabled: True
+                    disabled: app.is_app_disabled('ope-gateway')
                     active: app.is_app_active('ope-gateway')
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Router (ope-router) - Deals with multicast routing and firewall rules"
                 GridSwitch:
                     id: router_on
-                    disabled: True
+                    disabled: app.is_app_disabled('ope-router')
                     active: app.is_app_active('ope-router')
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] DNS (ope-dns) - Deals with DNS requests - add conditional forwarder for domain to this IP"
                 GridSwitch:
                     id: dns_on
-                    disabled: True
+                    disabled: app.is_app_disabled('ope-dns')
                     active: app.is_app_active('ope-dns')
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Clam Anti-virus (ope-clamav) - Holds anti-virus patterns for your network"
                 GridSwitch:
                     id: clamv_on
-                    disabled: True
+                    disabled: app.is_app_disabled('ope-clamav')
                     active: app.is_app_active('ope-clamav')
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Redis (ope-redis) - Memory caching server, used by Canvas and other apps"
                 GridSwitch:
                     id: redis_on
-                    disabled: True
+                    disabled: app.is_app_disabled('ope-redis')
                     active: app.is_app_active('ope-redis')
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Postgresql (ope-postgresql) - Database server, used by Canvas and other apps"
                 GridSwitch:
                     id: postgresql_on
-                    disabled: True
+                    disabled: app.is_app_disabled('ope-postgresql')
                     active: app.is_app_active('ope-postgresql')
 
                 GridLabel:

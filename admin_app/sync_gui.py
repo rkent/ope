@@ -341,6 +341,11 @@ class SyncOPEApp(App):
 
     required_apps = ["ope-gateway", "ope-router", "ope-dns", "ope-clamav", "ope-redis", "ope-postgresql" ]
     recommended_apps = ["ope-fog", "ope-canvas", "ope-smc"]
+    # In devmode, don't require anything
+    if OPE_DEVMODE:
+      Logger.info("Base: OPE_DEVMODE set, not requiring any apps")
+      recommended_apps.extend(required_apps)
+      required_apps = []
     stable_apps = [ "ope-kalite" ]
     beta_apps = ["ope-coco", "ope-freecodecamp", "ope-gcf", "ope-jsbin", "ope-rachel", "ope-stackdump", "ope-wamap"]
 
@@ -1588,6 +1593,9 @@ class SyncOPEApp(App):
             ret = "1"
 
         return ret
+
+    def is_app_disabled(self, app_name):
+        return app_name in SyncOPEApp.required_apps
 
     def show_settings_panel(self, panel_name):
         # Make sure settings are visible
