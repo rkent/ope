@@ -98,6 +98,22 @@ GIT_REPOS = {"sysprep_scripts": "https://github.com/operepo/sysprep_scripts.git"
              "ope_server_sync_binaries": "https://github.com/operepo/ope_server_sync_binaries.git",
              }
 
+# Hooks for development
+
+# A boolean that must be set for any development environment variables to be valid
+OPE_DEVMODE = "OPE_DEVMODE" in os.environ
+OPE_DEVMODE_GIT_BRANCH = False
+if OPE_DEVMODE:
+  Logger.info("Base: OPE_DEVMODE set, making development assumptions")
+  if "OPE_DEVMODE_GIT_OPE" in os.environ:
+    Logger.info("Base: Resetting ope repo to " + os.environ["OPE_DEVMODE_GIT_OPE"])
+    GIT_REPOS["ope"] = os.environ["OPE_DEVMODE_GIT_OPE"]
+  if "OPE_DEVMODE_GIT_BRANCH" in os.environ:
+    OPE_DEVMODE_GIT_BRANCH = os.environ["OPE_DEVMODE_GIT_BRANCH"]
+    Logger.info("Base: Using alternate branch for ope git pull: " + OPE_DEVMODE_GIT_BRANCH)
+
+else:
+  Logger.info("Base: OPE_DEVMODE not set") 
 
 def get_app_folder():
     global Logger, APP_FOLDER
@@ -694,7 +710,7 @@ class SyncOPEApp(App):
         sftp.close()
 
     def git_pull_local(self, status_label, branch="master"):
-        global GIT_REPOS
+        global GIT_REPOS, OPE_DEVMODE_GIT_BRANCH, Logger
         ret = ""
 
         repos = GIT_REPOS
@@ -712,6 +728,7 @@ class SyncOPEApp(App):
             os.makedirs(repo_path)
 
         for repo in repos:
+            repo_branch = branch
             status_label.text += "Pulling " + repo + " (may take several minutes)...\n"
             print("Pulling " + repo)
             # Make sure the repo folder exists
@@ -732,6 +749,9 @@ class SyncOPEApp(App):
             proc.wait()
             # ret += proc.stdout.read().decode('utf-8')
             print("-- Add Remote")
+            if OPE_DEVMODE_GIT_BRANCH and repo == "ope":
+              Logger.info("Base: Using alternate branch for ope remote: " + OPE_DEVMODE_GIT_BRANCH)
+              repo_branch = OPE_DEVMODE_GIT_BRANCH
             proc = subprocess.Popen(git_path + " remote add ope_origin " + repos[repo], cwd=f_path, stdout=subprocess.PIPE)
             proc.wait()
             # ret += proc.stdout.read().decode('utf-8')
@@ -745,7 +765,7 @@ class SyncOPEApp(App):
             # Make sure we have the current stuff from github
             # +refs/heads/*:refs/heads/*
             print("-- Fetch")
-            cmd = git_path + " --bare fetch ope_origin " + branch + ":master"
+            cmd = git_path + " --bare fetch -f ope_origin " + repo_branch + ":master"
             proc = subprocess.Popen(cmd, cwd=f_path, bufsize=1, universal_newlines=True, stdout=subprocess.PIPE)
             # out = proc.communicate()[0]
             # print ("--- " + out)
@@ -826,7 +846,7 @@ class SyncOPEApp(App):
 
             # Push to the remote server
             print("-- Push")
-            proc = subprocess.Popen(git_path + " push " + repo + "_" + remote_name + " " + branch, cwd=f_path, stdout=subprocess.PIPE)
+            proc = subprocess.Popen(git_path + " push -f " + repo + "_" + remote_name + " " + branch, cwd=f_path, stdout=subprocess.PIPE)
             proc.wait()
             # for line in proc.stdout:
             #    # status_label.text += line
@@ -861,7 +881,19 @@ class SyncOPEApp(App):
             # make sure to read all lines, even if we don't print them
             pass
 
-        stdin, stdout, stderr = ssh.exec_command("cd " + ssh_folder + "; git pull local_bare " + branch + ";", get_pty=True)
+        stdin, stdout, stderr = ssh.exec_command("cd " + ssh_folder + "; git fetch -f local_bare " + branch + ";", get_pty=True)
+        stdin.close()
+        # The above returns before the operation is done, causing issues with the reset. Wait
+        # until done.
+        for line in stdout:
+            # status_label.text += line
+            # Logger.info(line)
+            print("---- " + line)
+            pass
+        #
+        # During development, the local repo might end up a later rev than the desired update. Force the local gitrepo
+        # to match the last fetch.
+        stdin, stdout, stderr = ssh.exec_command("cd " + ssh_folder + "; git reset --hard refs/remotes/local_bare/master;", get_pty=True)
         stdin.close()
         for line in stdout:
             print("---- " + line)
