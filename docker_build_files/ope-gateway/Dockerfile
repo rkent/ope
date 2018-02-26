@@ -16,14 +16,14 @@ ENV VIRTUAL_HOST=gateway.ed
 ENV LANG=C.UTF-8
 ENV TERM=xterm
 
-
 # Install wget and install/updates certificates
 RUN apk update \
  && apk add \
     ca-certificates \
     wget \
-	nano \
-	openssl
+    nano \
+    openssl \
+    bash
  
  # Configure Nginx and apply fix for very long server names
 RUN echo "daemon off;" >> /etc/nginx/nginx.conf \
