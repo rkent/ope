@@ -503,6 +503,7 @@
                     id: gateway_on
                     disabled: app.is_app_disabled('ope-gateway')
                     active: app.is_app_active('ope-gateway')
+                    on_active: app.set_app_active('ope-gateway', self.active)
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Router (ope-router) - Deals with multicast routing and firewall rules"
@@ -510,6 +511,7 @@
                     id: router_on
                     disabled: app.is_app_disabled('ope-router')
                     active: app.is_app_active('ope-router')
+                    on_active: app.set_app_active('ope-router', self.active)
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] DNS (ope-dns) - Deals with DNS requests - add conditional forwarder for domain to this IP"
@@ -517,6 +519,7 @@
                     id: dns_on
                     disabled: app.is_app_disabled('ope-dns')
                     active: app.is_app_active('ope-dns')
+                    on_active: app.set_app_active('ope-dns', self.active)
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Clam Anti-virus (ope-clamav) - Holds anti-virus patterns for your network"
@@ -524,6 +527,7 @@
                     id: clamv_on
                     disabled: app.is_app_disabled('ope-clamav')
                     active: app.is_app_active('ope-clamav')
+                    on_active: app.set_app_active('ope-clamav', self.active)
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Redis (ope-redis) - Memory caching server, used by Canvas and other apps"
@@ -531,6 +535,7 @@
                     id: redis_on
                     disabled: app.is_app_disabled('ope-redis')
                     active: app.is_app_active('ope-redis')
+                    on_active: app.set_app_active('ope-redis', self.active)
 
                 GridLabel:
                     text: "[b][color=ff0000]**[/color][/b] Postgresql (ope-postgresql) - Database server, used by Canvas and other apps"
@@ -538,6 +543,7 @@
                     id: postgresql_on
                     disabled: app.is_app_disabled('ope-postgresql')
                     active: app.is_app_active('ope-postgresql')
+                    on_active: app.set_app_active('ope-postgresql', self.active)
 
                 GridLabel:
                     text: "[b][color=00ff00]**[/color][/b] FOG (ope-fog) - Imaging Server - stores windows images for OPE Laptops"
